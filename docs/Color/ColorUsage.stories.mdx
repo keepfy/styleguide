@@ -1,0 +1,88 @@
+import Button from 'flipper-ui/core/Button'
+import { theme, ThemeProvider } from '../../src'
+import Card, { Box, CardTag, SpaceBetween, Snackbar } from '../Components'
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
+
+<Meta title="Colors/Examples" />
+
+## Buttons
+
+#### Primary
+
+<Preview>
+    <Story name="primary buttons">
+        <SpaceBetween>
+            <Button color="primary" variant="contained">Button</Button>
+            <Button color="primary" variant="outlined">Button</Button>
+            <Button color="primary">Button</Button>
+        </SpaceBetween>
+    </Story>
+</Preview>
+
+#### Secondary
+
+<Preview>
+    <Story name="secondary buttons">
+        <SpaceBetween>
+            <Button color="secondary" variant="contained">Button</Button>
+            <Button color="secondary" variant="outlined">Button</Button>
+            <Button color="secondary">Button</Button>
+        </SpaceBetween>
+    </Story>
+</Preview>
+
+
+## Priority scale demo
+
+#### with tints
+
+<Preview>
+    <Story name="cards by priority scale">
+        <Box>
+            <Card kind="critical" tag="#00000" />
+            <Card kind="high" tag="#00001" />
+            <Card kind="medium" tag="#00002" />
+            <Card kind="low" tag="#00003" />
+            <Card kind="minimal" tag="#00004" />
+        </Box>
+    </Story>
+</Preview>
+
+#### with tags
+
+
+<Preview>
+    <Story name="cards by priority scale with tags">
+        <Box>
+            <CardTag kind="critical" tag="#00000" />
+            <CardTag kind="high" tag="#00001" />
+            <CardTag kind="medium" tag="#00002" />
+            <CardTag kind="low" tag="#00003" />
+            <CardTag kind="minimal" tag="#00004" />
+        </Box>
+    </Story>
+</Preview>
+
+
+## Feedback preset demo
+
+#### tooltips
+
+<Preview>
+    <Story name="tooltips with feedback preset">
+        <>
+            <Snackbar kind="error">
+                An error message or a bad thing occur
+            </Snackbar>
+            <Snackbar kind="info">
+                Your trial period has finished
+            </Snackbar>
+            <Snackbar kind="success">
+                A branch has been created with success
+            </Snackbar>
+            <Snackbar kind="warning">
+                You must confirm your email to use the app
+            </Snackbar>
+        </>
+    </Story>
+</Preview>

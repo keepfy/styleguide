@@ -1,0 +1,135 @@
+import ColorSample from './ColorSample'
+
+<Meta title="Colors/Intro" />
+
+> Current status: work in progress
+
+# Getting Started
+
+This guide is for patterns of color in the **Keepfy App**, the colors will
+be provided by a `theme provider` and the developer will access it with `theme.colors.NAME`.
+
+For more details see the example in the end of doc.
+
+
+## Main
+
+
+###### `theme.colors.main.(primary|secondary)`
+
+<ColorSample token='primary' />
+<ColorSample token='secondary' />
+
+### Grays
+
+###### `theme.colors.grays.g*`
+
+<ColorSample token='g1' />
+<ColorSample token='g2' />
+<ColorSample token='g3' />
+<ColorSample token='g4' />
+<ColorSample token='g5' />
+
+
+
+### Feedback
+
+###### `theme.colors.feedback.TYPE`
+
+<ColorSample token='error' />
+<ColorSample token='info' />
+<ColorSample token='success' />
+<ColorSample token='warning' />
+
+
+### Actions
+
+###### `theme.colors.actions.(confirm|cancel|neutral)`
+
+<ColorSample token='confirm' />
+<ColorSample token='cancel' />
+<ColorSample token='neutral' />
+
+
+### Priority Scale
+
+###### `theme.colors.priority.TYPE`
+
+<ColorSample token='critical' />
+<ColorSample token='high' />
+<ColorSample token='medium' />
+<ColorSample token='low' />
+<ColorSample token='minimal' />
+
+<div> </div>
+
+<ColorSample token='critical_light' />
+<ColorSample token='high_light' />
+<ColorSample token='medium_light' />
+<ColorSample token='low_light' />
+<ColorSample token='minimal_light' />
+
+### Generic for the app
+
+###### `theme.colors.app.TYPE`
+
+<ColorSample token='background' size='large' />
+<ColorSample token='background_lighter' size='large' />
+<ColorSample token='border' size='large' />
+
+<div> </div>
+
+<ColorSample token='text' size='large' />
+<ColorSample token='text_light' size='large' />
+<ColorSample token='text_disabled' size='large' />
+
+
+
+## Usage with theme provider
+
+See below the implementation of the `card with tints` using **Typescript**
+
+```tsx
+import { theme, ThemeProvider, TWithTheme } from '@keepfy/styleguide'
+
+interface IProps {
+    kind: 'critical' | 'medium' | 'high' | 'minimal' | 'low'
+    tag?: string
+    children: React.ReactNode
+}
+
+const CardStyled = styled('div')<TWithTheme<IProps>>(
+    (p: TWithTheme<IProps>) => ({
+        padding: '0.5rem',
+        borderLeft: `4px solid ${ p.theme.colors.priority[p.kind]}`,
+        backgroundColor: p.theme.colors.priority[p.kind + '_light'],
+        width: '144px',
+        height: '80px',
+        margin: '0 1rem 1rem 0',
+        borderRadius: '4px'
+    })
+)
+
+const Bold = styled('div')((p: ITheme) => ({
+    color: p.theme.colors.main.primary,
+    fontWeight: 600
+}))
+
+const Desc = styled('div')((p: ITheme) => ({
+    color: p.theme.colors.main.primary,
+    fontSize: '0.75rem'
+}))
+
+const Card = (props: IProps) =>
+    <CardStyled kind={ props.kind }>
+        <Bold>{ props.tag }</Bold>
+        <Desc>{ `A ${ props.kind } situation` }</Desc>
+    </CardStyled>
+
+const App = () => (
+    <ThemeProvider theme={ theme }>
+        <Card kind="critical" tag="#00005" />
+    </ThemeProvider>
+)
+```
+

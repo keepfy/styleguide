@@ -1,41 +1,52 @@
-import { createMuiTheme, Theme as ThemeMui } from '@material-ui/core/styles'
+import { createMuiTheme, Theme as ThemeMuiDefault } from '@material-ui/core/styles'
 import colors from './colors'
 
-export const themeBase = colors
+export const baseTheme = { colors }
 
-// Material ui theme extended
-export const theme = Object.assign({}, createMuiTheme({
+export const muiThemeOptions = {
     palette: {
         primary: {
-            main: colors.main.primary
+            main: colors.primary
         },
         secondary: {
-            main: colors.main.secondary
+            main: colors.secondary
         },
         error: {
-            main: colors.feedback.error
+            main: colors.feedback.danger
         },
         background: {
-            default: colors.app.background
+            default: colors.app.background.main
         }
     }
-}), { colors })
+}
 
-type Colors = typeof colors
+// Material ui theme extended
+export const muiThemeExtended = {
+    colors,
+    ...createMuiTheme(muiThemeOptions)
+}
 
 // Material UI Interface theme extesion
-export interface Theme extends ThemeMui {
-    palette: ThemeMui['palette']
+export interface ThemeMui extends ThemeMuiDefault {
+    palette: ThemeMuiDefault['palette']
     colors: Colors
 }
 
-// Util interface to use in styled-component
-export interface ITheme {
-    theme: Theme
+// Util interface to use ThemeMui in styled-components
+export interface StyledThemeMui {
+    theme: ThemeMui
 }
 
-// Raw colors
-export interface ThemeBasic extends Colors{}
+export type WithThemeMui<Props extends object> = Props & StyledThemeMui
 
-// Util interface to extend (Props + ITheme)
-export type TWithTheme<Props extends object> = Props & ITheme
+// Raw colors
+export type Colors = typeof colors
+
+export interface Theme {
+    theme: {
+        colors: Colors
+    }
+}
+
+// Util interface to extend (Props + Theme)
+export type WithTheme<Props extends object> = Props & Theme

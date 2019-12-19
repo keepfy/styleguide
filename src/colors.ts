@@ -1,30 +1,43 @@
 import { Priority, Feedback, Criticality } from './presets'
 
-const primary = '#152849'
-const secondary = '#118D16'
-
-const neutrals = {
+const neutral = {
     black: '#000',
     white: '#FFF',
     transparent: 'rgba(0, 0, 0, 0)'
 }
 
+const primary = {
+    main: '#152849',
+    dark: '#0E1C33',
+    light: '#43536D',
+    contrast: neutral.white
+}
+
+const secondary = {
+    main: '#118D16',
+    dark: '#0B620F',
+    light: '#40A344',
+    contrast: neutral.white
+}
+
 const grays = {
-    g1: '#212121',
-    g2: '#3d3d3d',
-    g3: '#5b5b5b',
-    g4: '#797979',
-    g5: '#979797',
-    g6: '#b5b5b5',
-    g7: '#D4D4D4',
-    g8: '#F2F2F2'
+    g0: '#212121',
+    g1: '#424242',
+    g2: '#616161',
+    g3: '#757575',
+    g4: '#9e9e9e',
+    g5: '#bdbdbd',
+    g6: '#e0e0e0',
+    g7: '#eeeeee',
+    g8: '#f5f5f5',
+    g9: '#fafafa',
 }
 
 // Actions
 const action = {
     confirm: '#118D16',
     cancel: '#D84315',
-    neutral: primary
+    neutral: primary.main
 }
 
 const feedback: Record<Feedback, string> = {
@@ -54,6 +67,10 @@ const priority: Record<Priority, { main: string, light: string }> = {
     minimal: {
         main: '#56CCF2',
         light: '#DAF2FD'
+    },
+    neutral: {
+        main: grays.g5,
+        light: grays.g8
     }
 }
 
@@ -64,15 +81,15 @@ const criticality: Record<Criticality, string> = {
 }
 
 const app = {
-    border: grays.g7,
+    border: grays.g6,
     background: {
         main: '#F6F7FF',
         lighter: grays.g8,
     },
     text: {
-        main: grays.g1,
-        light: grays.g4,
-        disabled: grays.g5
+        main: grays.g0,
+        light: grays.g3,
+        disabled: grays.g6
     }
 }
 
@@ -83,7 +100,7 @@ export default {
     priority,
     feedback,
     criticality,
-    neutrals,
+    neutral,
     grays,
     action
 }

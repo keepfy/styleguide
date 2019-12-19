@@ -1,15 +1,15 @@
 import { createMuiTheme, Theme as ThemeMuiDefault } from '@material-ui/core/styles'
 import colors from './colors'
 
-export const baseTheme = { colors }
+export const theme = { colors }
 
 export const muiThemeOptions = {
     palette: {
         primary: {
-            main: colors.primary
+            main: colors.primary.main
         },
         secondary: {
-            main: colors.secondary
+            main: colors.secondary.main
         },
         error: {
             main: colors.feedback.danger
@@ -21,10 +21,12 @@ export const muiThemeOptions = {
 }
 
 // Material ui theme extended
-export const muiThemeExtended = {
+export const muiTheme = {
     colors,
     ...createMuiTheme(muiThemeOptions)
 }
+
+console.log({ muiTheme })
 
 // Material UI Interface theme extesion
 export interface ThemeMui extends ThemeMuiDefault {

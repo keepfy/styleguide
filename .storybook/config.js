@@ -1,8 +1,11 @@
 import { configure, addParameters, addDecorator } from '@storybook/react'
 import { create } from '@storybook/theming/create'
-import { theme, ThemeProvider } from '../src'
+import { muiThemeOptions, theme } from '../src'
+import { ThemeProvider } from 'flipper-ui'
+import { StylesProvider } from '@material-ui/core/styles'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import React from 'react'
-import { SpaceBetween } from '../docs/Components'
 
 const customTheme = create({
   base: 'light',
@@ -17,15 +20,21 @@ const customTheme = create({
 
 addParameters({
   options: {
-    theme: customTheme
+    theme: customTheme,
+    storySort: (a, b) => a[1].id.localeCompare(b[1].id)
   }
 })
 
 addDecorator(
   storyFn =>
-    <ThemeProvider theme={ theme }>
+  <StylesProvider injectFirst>
+    <StyledThemeProvider theme={ theme }>
+      <ThemeProvider options={ muiThemeOptions }>
+        <CssBaseline />
         { storyFn() }
-    </ThemeProvider>
+      </ThemeProvider>
+    </StyledThemeProvider>
+  </StylesProvider>
 )
 
 configure(require.context('../docs', true, /\.stories\.(mdx|tsx?)$/), module)

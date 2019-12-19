@@ -1,7 +1,10 @@
 import React, { CSSProperties } from 'react'
-import { themeBase as colors } from "../../src"
+import { theme } from "../../src"
+
+const colors = theme.colors
 
 interface IProps {
+    set: string,
     token: string,
     size: 'small' | 'medium' | 'large'
 }
@@ -11,7 +14,7 @@ const wrapperStyle: CSSProperties = {
     boxSizing: 'border-box',
     display: 'inline-block',
     fontFamily: 'Roboto, sans-serif',
-    color: colors.app.text_light,
+    color: colors.app.text.light,
     fontWeight: 500,
     boxShadow: '0px 2px 6px 1px #9995',
     borderRadius: '4px'
@@ -35,32 +38,39 @@ const descStyle = {
 }
 
 const tagStyle = {
-    color: colors.app.text,
+    color: colors.app.text.main,
     fontWeight: 600,
     fontSize: '0.75rem',
     marginBottom: '0.25rem'
 }
 
-const colorBy = (token: string) => {
-    for(const key in colors) {
-        const obj = colors[key]
+type Pair<T> = [T, T]
+
+const colorBy = ([set, token]: Pair<string | undefined>): string => {
+    if(set in colors) {
+        const obj = colors[set]
         if (typeof obj === 'string') return obj
-        if (token in obj) {
-            return obj[token]
-        }
+        const tokens = token.split('.')
+        return tokens.reduce((acc: object, cur: string) => {
+            if (cur in acc) {
+                return acc[cur]
+            }
+
+            return acc
+        }, obj)
     }
 
     return '#000000'
 }
 
-const ColorSample = ({ token, size }: IProps) => {
-    const value = colorBy(token)
+const ColorSample = ({ set, token, size }: IProps) => {
+    const value = colorBy([set, token])
 
     return (
         <div style={ wrapperStyle }>
             <div style={ colorStyle(value, size) }></div>
             <div style={ descStyle }>
-                <div style={ tagStyle }>{ token }</div>
+                <div style={ tagStyle }>{ token ? token : set }</div>
                 <div>{ value }</div>
             </div>
         </div>

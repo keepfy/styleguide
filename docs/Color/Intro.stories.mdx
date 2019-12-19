@@ -1,6 +1,6 @@
 import ColorSample from './ColorSample'
 
-<Meta title="Colors/Intro" />
+<Meta title="Colors/1 - Intro" />
 
 > Current status: work in progress
 
@@ -12,76 +12,96 @@ be provided by a `theme provider` and the developer will access it with `theme.c
 For more details see the example in the end of doc.
 
 
-## Main
+## Base
 
 
-###### `theme.colors.main.(primary|secondary)`
+###### `theme.colors.(primary|secondary).(main|dark|light|contrast)`
 
-<ColorSample token='primary' />
-<ColorSample token='secondary' />
+#### Primary
+
+<ColorSample set='primary' token='main' />
+<ColorSample set='primary' token='dark' />
+<ColorSample set='primary' token='light' />
+<ColorSample set='primary' token='contrast' />
+
+#### Secondary
+
+<ColorSample set='secondary' token='main' />
+<ColorSample set='secondary' token='dark' />
+<ColorSample set='secondary' token='light' />
+<ColorSample set='secondary' token='contrast' />
 
 ### Grays
 
 ###### `theme.colors.grays.g*`
 
-<ColorSample token='g1' />
-<ColorSample token='g2' />
-<ColorSample token='g3' />
-<ColorSample token='g4' />
-<ColorSample token='g5' />
+<ColorSample set='grays' token='g0' />
+<ColorSample set='grays' token='g1' />
+<ColorSample set='grays' token='g2' />
+<ColorSample set='grays' token='g3' />
+<ColorSample set='grays' token='g4' />
+
+<div></div>
+
+<ColorSample set='grays' token='g5' />
+<ColorSample set='grays' token='g6' />
+<ColorSample set='grays' token='g7' />
+<ColorSample set='grays' token='g8' />
+<ColorSample set='grays' token='g9' />
 
 
+## Presets
 
 ### Feedback
 
 ###### `theme.colors.feedback.TYPE`
 
-<ColorSample token='error' />
-<ColorSample token='info' />
-<ColorSample token='success' />
-<ColorSample token='warning' />
+<ColorSample set='feedback' token='danger' />
+<ColorSample set='feedback' token='info' />
+<ColorSample set='feedback' token='success' />
+<ColorSample set='feedback' token='warning' />
 
 
 ### Actions
 
-###### `theme.colors.actions.(confirm|cancel|neutral)`
+###### `theme.colors.action.(confirm|cancel|neutral)`
 
-<ColorSample token='confirm' />
-<ColorSample token='cancel' />
-<ColorSample token='neutral' />
+<ColorSample set='action' token='confirm' />
+<ColorSample set='action' token='cancel' />
+<ColorSample set='action' token='neutral' />
 
 
 ### Priority Scale
 
 ###### `theme.colors.priority.TYPE`
 
-<ColorSample token='critical' />
-<ColorSample token='high' />
-<ColorSample token='medium' />
-<ColorSample token='low' />
-<ColorSample token='minimal' />
+<ColorSample set='priority' token='critical.main' />
+<ColorSample set='priority' token='high.main' />
+<ColorSample set='priority' token='medium.main' />
+<ColorSample set='priority' token='low.main' />
+<ColorSample set='priority' token='minimal.main' />
 
 <div> </div>
 
-<ColorSample token='critical_light' />
-<ColorSample token='high_light' />
-<ColorSample token='medium_light' />
-<ColorSample token='low_light' />
-<ColorSample token='minimal_light' />
+<ColorSample set='priority' token='critical.light' />
+<ColorSample set='priority' token='high.light' />
+<ColorSample set='priority' token='medium.light' />
+<ColorSample set='priority' token='low.light' />
+<ColorSample set='priority' token='minimal.light' />
 
-### Generic for the app
+### App
 
 ###### `theme.colors.app.TYPE`
 
-<ColorSample token='background' size='large' />
-<ColorSample token='background_lighter' size='large' />
-<ColorSample token='border' size='large' />
+<ColorSample set='app'  token='background.main' size='large' />
+<ColorSample set='app' token='background.lighter' size='large' />
+<ColorSample set='app' token='border' size='large' />
 
 <div> </div>
 
-<ColorSample token='text' size='large' />
-<ColorSample token='text_light' size='large' />
-<ColorSample token='text_disabled' size='large' />
+<ColorSample set='app' token='text.main' size='large' />
+<ColorSample set='app' token='text.light' size='large' />
+<ColorSample set='app' token='text.disabled' size='large' />
 
 
 
@@ -90,7 +110,9 @@ For more details see the example in the end of doc.
 See below the implementation of the `card with tints` using **Typescript**
 
 ```tsx
-import { theme, ThemeProvider, TWithTheme } from '@keepfy/styleguide'
+import { muiThemeOptions, theme, WithTheme } from '@keepfy/styleguide'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'flipper-ui'
 
 interface IProps {
     kind: 'critical' | 'medium' | 'high' | 'minimal' | 'low'
@@ -98,25 +120,26 @@ interface IProps {
     children: React.ReactNode
 }
 
-const CardStyled = styled('div')<TWithTheme<IProps>>(
-    (p: TWithTheme<IProps>) => ({
+const CardStyled = styled('div')<WithTheme<IProps>>(
+    ({ theme, kind }: WithTheme<IProps>) => ({
         padding: '0.5rem',
-        borderLeft: `4px solid ${ p.theme.colors.priority[p.kind]}`,
-        backgroundColor: p.theme.colors.priority[p.kind + '_light'],
+        borderLeft: `4px solid ${ theme.colors.priority[kind].main}`,
+        backgroundColor: theme.colors.priority[kind].light,
         width: '144px',
         height: '80px',
         margin: '0 1rem 1rem 0',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        position: 'relative'
     })
 )
 
-const Bold = styled('div')((p: ITheme) => ({
-    color: p.theme.colors.main.primary,
+const Bold = styled('div')(({ theme }: ITheme) => ({
+    color: theme.colors.primary,
     fontWeight: 600
 }))
 
-const Desc = styled('div')((p: ITheme) => ({
-    color: p.theme.colors.main.primary,
+const Desc = styled('div')(({ theme }: ITheme) => ({
+    color: theme.colors.main.primary,
     fontSize: '0.75rem'
 }))
 
@@ -127,9 +150,11 @@ const Card = (props: IProps) =>
     </CardStyled>
 
 const App = () => (
-    <ThemeProvider theme={ theme }>
-        <Card kind="critical" tag="#00005" />
-    </ThemeProvider>
+    <StyledThemeProvider theme={ theme }>
+        <ThemeProvider options={ muiThemeOptions }>
+            <Card kind="critical" tag="#00005" />
+        </ThemeProvider>
+    </StyledThemeProvider>
 )
 ```
 

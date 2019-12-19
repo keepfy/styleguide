@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
-import { TWithTheme, ITheme } from '../src'
+import { WithTheme, Theme } from '../src'
 
 interface IProps {
     kind: 'critical' | 'medium' | 'high' | 'minimal' | 'low'
@@ -9,22 +9,23 @@ interface IProps {
     children: React.ReactNode
 }
 
-const CardStyled = styled('div')<TWithTheme<IProps>>(
-    (p: TWithTheme<IProps>) => ({
+const CardStyled = styled('div')<WithTheme<IProps>>(
+    ({ theme, kind }: WithTheme<IProps>) => ({
         padding: '0.5rem',
-        borderLeft: `4px solid ${ p.theme.colors.priority[p.kind]}`,
-        backgroundColor: p.theme.colors.priority[p.kind + '_light'],
+        borderLeft: `4px solid ${ theme.colors.priority[kind].main}`,
+        backgroundColor: theme.colors.priority[kind].light,
         width: '144px',
         height: '80px',
         margin: '0 1rem 1rem 0',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        position: 'relative'
     })
 )
 
-const CardTagStyled = styled('div')<TWithTheme<IProps>>(
-    (p: TWithTheme<IProps>) => ({
+const CardTagStyled = styled('div')<WithTheme<IProps>>(
+    ({ theme, kind }: WithTheme<IProps>) => ({
         padding: '0.5rem',
-        borderLeft: `4px solid ${p.theme.colors.priority[p.kind]}`,
+        borderLeft: `4px solid ${theme.colors.priority[kind].main}`,
         backgroundColor: 'white',
         width: '216px',
         height: '80px',
@@ -34,13 +35,32 @@ const CardTagStyled = styled('div')<TWithTheme<IProps>>(
     })
 )
 
-const Bold = styled('div')((p: ITheme) => ({
-    color: p.theme.colors.main.primary,
+const CardTagStyledPattern = styled(CardStyled)`
+    & > * {
+        z-index: 1;
+        position: relative;
+    }
+    ::before {
+        z-index: 0;
+        content: '';
+        opacity: 0.5;
+        display: block;
+        position: absolute;
+        background-image: url("${require('./pattern.png')}");
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+`
+
+const Bold = styled('div')((p: Theme) => ({
+    color: p.theme.colors.primary.main,
     fontWeight: 600
 }))
 
-const Desc = styled('div')((p: ITheme) => ({
-    color: p.theme.colors.main.primary,
+const Desc = styled('div')((p: Theme) => ({
+    color: p.theme.colors.primary.main,
     fontSize: '0.75rem'
 }))
 
@@ -60,12 +80,12 @@ export const SpaceBetween = styled.div`
     justify-content: space-between;
 `
 
-const Tag = styled('span')<TWithTheme<IProps>>(p => ({
+const Tag = styled('span')<WithTheme<IProps>>(p => ({
     color: p.theme.colors.neutral.white,
-    backgroundColor: p.theme.colors.priority[p.kind],
+    backgroundColor: p.theme.colors.priority[p.kind].main,
     fontSize: '0.65rem',
     padding: '0.125rem 0.25rem',
-    borderRadius: '4px'
+    borderRadius: '5px'
 }))
 
 const tagFromKind = (kind: IProps['kind']) => {
@@ -77,8 +97,8 @@ interface IFeedback {
     children?: React.ReactNode
 }
 
-const SnackbarStyled = styled(SnackbarContent)<TWithTheme<IFeedback>>(
-    (p: TWithTheme<IFeedback>) => ({
+const SnackbarStyled = styled(SnackbarContent)<WithTheme<IFeedback>>(
+    (p: WithTheme<IFeedback>) => ({
         backgroundColor: p.theme.colors.feedback[p.kind],
         borderRadius: '4px',
         color: 'white'
@@ -100,5 +120,12 @@ export const CardTag = (props: IProps) =>
         </SpaceBetween>
         <Desc>{ `A ${props.kind} situation` }</Desc>
     </CardTagStyled>
+
+export const CardR = (props: IProps) =>
+    <CardTagStyledPattern kind={ props.kind }>
+        <Bold>{ props.tag }</Bold>
+        <Desc>{ `A ${props.kind} situation` }</Desc>
+    </CardTagStyledPattern>
+
 
 export default Card

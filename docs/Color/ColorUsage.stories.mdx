@@ -1,9 +1,10 @@
 import Button from 'flipper-ui/core/Button'
-import { theme, ThemeProvider } from '../../src'
-import Card, { Box, CardTag, SpaceBetween, Snackbar } from '../Components'
+import List from 'flipper-ui/core/List'
+import ListItem from 'flipper-ui/core/ListItem'
+import Card, { CardR, Box, CardTag, SpaceBetween, Snackbar } from '../Components'
 import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
 
-<Meta title="Colors/Examples" />
+<Meta title="Colors/2 - Examples" />
 
 ## Buttons
 
@@ -44,6 +45,7 @@ import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
             <Card kind="medium" tag="#00002" />
             <Card kind="low" tag="#00003" />
             <Card kind="minimal" tag="#00004" />
+            <CardR kind="minimal" tag="#00005" />
         </Box>
     </Story>
 </Preview>
@@ -59,6 +61,7 @@ import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
             <CardTag kind="medium" tag="#00002" />
             <CardTag kind="low" tag="#00003" />
             <CardTag kind="minimal" tag="#00004" />
+            <CardTag kind="neutral" tag="#00005" />
         </Box>
     </Story>
 </Preview>
@@ -66,12 +69,12 @@ import { Meta, Story, Preview } from '@storybook/addon-docs/blocks'
 
 ## Feedback preset demo
 
-#### tooltips
+#### Snackbar
 
 <Preview>
     <Story name="tooltips with feedback preset">
         <>
-            <Snackbar kind="error">
+            <Snackbar kind="danger">
                 An error message or a bad thing occur
             </Snackbar>
             <Snackbar kind="info">

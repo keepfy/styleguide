@@ -26,8 +26,6 @@ export const muiTheme = {
     ...createMuiTheme(muiThemeOptions)
 }
 
-console.log({ muiTheme })
-
 // Material UI Interface theme extesion
 export interface ThemeMui extends ThemeMuiDefault {
     palette: ThemeMuiDefault['palette']

@@ -11,12 +11,13 @@
   "author": "void",
   "license": "MIT",
   "scripts": {
-    "demo": "start-storybook",
-    "now-build": "rm -rf public && build-storybook --docs -o public",
+    "docs": "start-storybook",
+    "docs:build": "build-storybook --docs -o public",
+    "now-build": "rm -rf public && npm run docs:build",
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
-    "publish:alpha": "rm -rf lib && npm run build && cp package.json lib && npm publish lib --tag alpha"
+    "publish:alpha": "node pre-publish && npm run build && npm publish lib --tag alpha"
   },
   "devDependencies": {
     "@babel/cli": "7.7.5",
@@ -36,6 +37,7 @@
     "babel-loader": "8.0.6",
     "babel-preset-react-app": "^9.1.0",
     "flipper-ui": "0.21.15",
+    "fs-extra": "8.1.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "styled-components": "4.4.1",

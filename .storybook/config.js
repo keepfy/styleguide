@@ -14,7 +14,7 @@ const customTheme = create({
   colorSecondary: 'deepskyblue',
 
   brandTitle: 'Keepfy Styles',
-  brandUrl: 'https://github.com/keepfy',
+  brandUrl: 'https://github.com/keepfy/styleguide',
   brandImage: require('./assets/logo.png')
 })
 

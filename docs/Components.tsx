@@ -121,11 +121,4 @@ export const CardTag = (props: IProps) =>
         <Desc>{ `A ${props.kind} situation` }</Desc>
     </CardTagStyled>
 
-export const CardR = (props: IProps) =>
-    <CardTagStyledPattern kind={ props.kind }>
-        <Bold>{ props.tag }</Bold>
-        <Desc>{ `A ${props.kind} situation` }</Desc>
-    </CardTagStyledPattern>
-
-
 export default Card
